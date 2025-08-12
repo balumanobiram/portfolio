@@ -19,16 +19,19 @@ export default function Login() {
   const navigate = useNavigate();
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://127.0.0.1:5000/login", {
+    const res = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ username, password })
+      
     });
     if (res.status === 200) {
+      localStorage.setItem("username", username);
       navigate("/dashboard");
     } else {
       const data = await res.json();
-      alert(data.message);
+      alert("Invalid credentials");
     }
     
   };
